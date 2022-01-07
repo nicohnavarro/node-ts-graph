@@ -1,12 +1,16 @@
-import express from 'express';
-import { graphqlHTTP } from 'express-graphql';
-import { schema } from './schema';
-const app = express();
+import app from './app';
+import { connectDB } from './db';
 
-app.use('/graphql',graphqlHTTP({
-  graphiql:true,
-  schema
-}))
 
-app.listen(3000);
-console.log('Server on port 3000')
+async  function main(){
+  try{
+    await connectDB()
+    app.listen(3000);
+    console.log('Server on port 3000');
+  }
+  catch(e:any){
+    console.log(e.message);
+  }
+}
+
+main()
